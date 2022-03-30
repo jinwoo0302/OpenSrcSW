@@ -12,8 +12,8 @@ import org.w3c.dom.Element;
 
 public class makeCollection {
 
-	public makeCollection(String path) throws ParserConfigurationException, IOException, TransformerException {
-		makecollection(path);
+	public makeCollection(String path, String name) throws ParserConfigurationException, IOException, TransformerException {
+		makecollection(path,name);
 	}
 
 	public static File[] makeFileList(String htmlpath) {
@@ -21,7 +21,7 @@ public class makeCollection {
 		return dir.listFiles();
 	}
 
-	public void makecollection(String filename) throws ParserConfigurationException, IOException, TransformerException {
+	public void makecollection(String filepath, String name) throws ParserConfigurationException, IOException, TransformerException {
 
 
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -31,7 +31,7 @@ public class makeCollection {
 		Element docs = document.createElement("docs");
 		document.appendChild(docs);
 
-		File[] files = makeFileList(filename);
+		File[] files = makeFileList(filepath);
 
 		for (int i = -0; i < 5; i++) {
 			org.jsoup.nodes.Document html = Jsoup.parse(files[i], "UTF-8");
@@ -52,7 +52,7 @@ public class makeCollection {
 			doc.appendChild(body);
 		}
 		
-		makeXml.makexml(document,filename);
+		makeXml.makexml(document,name);
 
 	}
 

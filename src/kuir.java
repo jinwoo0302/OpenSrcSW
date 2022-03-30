@@ -14,20 +14,16 @@ public class kuir {
 		String path=args[1];
 		
 		if(command.equals("-c")){
-			makeCollection collection = new makeCollection(path);
-			collection.makecollection(path);
+			makeCollection collection = new makeCollection(path, "collection.xml");
+			collection.makecollection(path, "collection.xml");
 		}else if(command.equals("-k")) {
-			makeKeyword keyword= new makeKeyword(path);
-			keyword.makekeyword(path);
+			makeKeyword keyword= new makeKeyword(path, "index.xml");
+			keyword.makekeyword(path, "index.xml");
 		}else if(command.equals("-i")) {
-			indexer index = new indexer(path);
-			index.makehash(path);
+			indexer index = new indexer(path, "index.post");
+			index.makehash(path,"index.post");
 		}else
 			System.out.println("Invalid arguments");
-		
-		for(int i=0; i<args.length;i++) {
-			System.out.println(args[i]);
-		}
 	}
 	
 }

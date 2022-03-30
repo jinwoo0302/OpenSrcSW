@@ -13,11 +13,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class makeKeyword {
-	public makeKeyword(String path) throws TransformerException, ParserConfigurationException, SAXException, IOException {
-		makekeyword(path);
+	public makeKeyword(String path, String name) throws TransformerException, ParserConfigurationException, SAXException, IOException {
+		makekeyword(path,name);
 	}
 
-	public void makekeyword(String filepath) throws TransformerException, ParserConfigurationException, SAXException, IOException {
+	public void makekeyword(String filepath, String name) throws TransformerException, ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 		Document document = docBuilder.newDocument();
@@ -41,7 +41,7 @@ public class makeKeyword {
 		document.getElementsByTagName("body").item(i).setTextContent(str2);
 	}
 
-	makeXml.makexml(document,filepath);
+	makeXml.makexml(document,name);
 	
 	}
 }

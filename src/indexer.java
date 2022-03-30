@@ -17,17 +17,17 @@ public class indexer {
 	private static NodeList nodes;
 	private static HashMap<String, String> Word;
 
-	public indexer(String path) throws IOException, ParserConfigurationException, SAXException {
-		makehash(path);
+	public indexer(String path, String name) throws IOException, ParserConfigurationException, SAXException {
+		makehash(path, name);
 		
 	}
 
 
 
 	@SuppressWarnings({ "unchecked", "rawtypes" ,"nls"})
-	public static void makehash(String filepath) throws IOException, ParserConfigurationException, SAXException {
+	public static void makehash(String filepath, String name) throws IOException, ParserConfigurationException, SAXException {
 		
-		FileOutputStream fileStream = new FileOutputStream(filepath);
+		FileOutputStream fileStream = new FileOutputStream(name);
 		
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileStream);
 		
