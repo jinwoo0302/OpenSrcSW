@@ -16,6 +16,10 @@ import org.xml.sax.SAXException;
 public class indexer {
 	private static NodeList nodes;
 	private static HashMap<String, String> Word;
+	private static String[] wordlist;
+
+	
+
 
 	public indexer(String path, String name) throws IOException, ParserConfigurationException, SAXException {
 		makehash(path, name);
@@ -24,7 +28,7 @@ public class indexer {
 
 
 
-	@SuppressWarnings({ "unchecked", "rawtypes" ,"nls"})
+	@SuppressWarnings({ "unchecked", "rawtypes" , "null"})
 	public static void makehash(String filepath, String name) throws IOException, ParserConfigurationException, SAXException {
 		
 		FileOutputStream fileStream = new FileOutputStream(name);
@@ -41,12 +45,31 @@ public class indexer {
 	
 		nodes = document.getElementsByTagName("body");
 		
+
+		int cnt=0;
+		wordlist = new String[100000];
+		
+		for(int i = 0;i<nodes.getLength();i++)
+		{
+			String str = nodes.item(i).getTextContent();
+			KeywordExtractor ke = new KeywordExtractor();
+			KeywordList kl = ke.extractKeyword(str, true);
+
+			for (int j = 0; j < kl.size(); j++) {
+				wordlist[cnt] +=kl.get(j);
+				cnt++;
+			}
+		}
+	
+		
+		
+		
+		
 		for(int i = 0; i < nodes.getLength(); i++){
             String str= nodes.item(i).getTextContent();
             Weight(i, str);
 		}
 
-		objectOutputStream.writeObject(Word);
 		
 		objectOutputStream.close();
 	}
@@ -64,6 +87,7 @@ public class indexer {
 			String[] str3 = str2.split(":");
 			word = str3[0];
 			freq = Integer.parseInt(str3[1]);
+					
 			Store(id, word, freq);
 		}
 	}
@@ -81,24 +105,19 @@ public class indexer {
 
 
 
-	@SuppressWarnings("unlikely-arg-type")
+
 	public static int Count(String word) {
 		int count=0;
-		for(int i = 0; i < nodes.getLength(); i++){
-			String str1 = nodes.item(i).getTextContent();
-			KeywordExtractor ke = new KeywordExtractor();
-			KeywordList kl = ke.extractKeyword(str1, true);
-
-			for (int j = 0; j < kl.size(); j++) {
-				if(word.equals(kl.get(j)) ) {
+		for(String str : wordlist) {
+			if(str.equals(""))
+				break;
+			if(str.equals(word)) {
 					count++;
-					break;
-				}
 			}
+				
 		}
-		
 		return count;
+	}
 		
 			
-	}
 }
