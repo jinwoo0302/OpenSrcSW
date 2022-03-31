@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/s_jinwoo0302/Desktop/SimpleIR/jsoup-1.14.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/s_jinwoo0302/Desktop/SimpleIR/kkma-2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/test/Desktop/SimpleIR2/jsoup-1.14.3 (1).jar"/>
+	<classpathentry kind="lib" path="C:/Users/test/Desktop/SimpleIR2/kkma-2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

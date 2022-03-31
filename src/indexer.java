@@ -7,8 +7,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.snu.ids.kkma.index.KeywordExtractor;
-import org.snu.ids.kkma.index.KeywordList;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -17,6 +16,7 @@ public class indexer {
 	private static NodeList nodes;
 	private static HashMap<String, String> Word;
 	private static String[] wordlist;
+	private static int cnt;
 
 	
 
@@ -28,7 +28,7 @@ public class indexer {
 
 
 
-	@SuppressWarnings({ "unchecked", "rawtypes" , "null"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void makehash(String filepath, String name) throws IOException, ParserConfigurationException, SAXException {
 		
 		FileOutputStream fileStream = new FileOutputStream(name);
@@ -46,21 +46,24 @@ public class indexer {
 		nodes = document.getElementsByTagName("body");
 		
 
-		int cnt=0;
+		cnt=0;
 		wordlist = new String[100000];
 		
 		for(int i = 0;i<nodes.getLength();i++)
 		{
 			String str = nodes.item(i).getTextContent();
-			KeywordExtractor ke = new KeywordExtractor();
-			KeywordList kl = ke.extractKeyword(str, true);
-
-			for (int j = 0; j < kl.size(); j++) {
-				wordlist[cnt] +=kl.get(j);
+			String[] str2 = str.split("#");
+			for(int j=0;j<str2.length;j++) {
+				String str3=str2[j];
+				String[] temp=str3.split(":");
+				wordlist[cnt]=temp[0];
 				cnt++;
 			}
 		}
-	
+		
+//		for(int i=0;i<cnt;i++) {
+//			System.out.println(wordlist[i]);
+//		}
 		
 		
 		
@@ -71,7 +74,19 @@ public class indexer {
 		}
 
 		
+		
+		for(int i=0;i<cnt;i++) {
+			System.out.println(i+" "+wordlist[i]+" "+Word.get(wordlist[i]));
+		}
+		
+		System.out.println(cnt);
+		System.out.println(Count("ÀÌ¿כ"));
+		
 		objectOutputStream.close();
+		
+		
+		
+	
 	}
 
 	
@@ -96,10 +111,15 @@ public class indexer {
 	public static void Store(int id, String word, int freq) {
 		double weight;
 		weight=freq*Math.log(nodes.getLength()/Count(word));
-		weight=Math.round((weight*100)/100.0);
-		String value;
-		value=Word.get(word)+ " "+ id + " "+ weight;
-		Word.put(word,value);
+		String round = String.format("%.2f", weight);
+		System.out.print(round+" \n");
+//		System.out.println(round);
+//		String value;
+//		value=Word.get(word)+ " "+ id + " "+ round;
+		if(Word.get(word)==null) {
+			Word.put(word,"");
+		}
+		Word.put(word,Word.get(word)+ " "+ id + " "+ round);
 	}
 
 
@@ -108,14 +128,13 @@ public class indexer {
 
 	public static int Count(String word) {
 		int count=0;
-		for(String str : wordlist) {
-			if(str.equals(""))
-				break;
-			if(str.equals(word)) {
+//		System.out.println(word);
+		for(int i=0; i<cnt;i++) {
+			if(wordlist[i].equals(word)) {
 					count++;
 			}
-				
 		}
+//		System.out.println(count);
 		return count;
 	}
 		
