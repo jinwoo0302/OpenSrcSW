@@ -61,12 +61,6 @@ public class indexer {
 			}
 		}
 		
-//		for(int i=0;i<cnt;i++) {
-//			System.out.println(wordlist[i]);
-//		}
-		
-		
-		
 		
 		for(int i = 0; i < nodes.getLength(); i++){
             String str= nodes.item(i).getTextContent();
@@ -76,11 +70,11 @@ public class indexer {
 		
 		
 		for(int i=0;i<cnt;i++) {
-			System.out.println(i+" "+wordlist[i]+" "+Word.get(wordlist[i]));
+			System.out.println(wordlist[i]+" "+Word.get(wordlist[i]));
 		}
+				
 		
-		System.out.println(cnt);
-		System.out.println(Count("ÀÌ¿כ"));
+		objectOutputStream.writeObject(Word);
 		
 		objectOutputStream.close();
 		
@@ -110,16 +104,15 @@ public class indexer {
 
 	public static void Store(int id, String word, int freq) {
 		double weight;
-		weight=freq*Math.log(nodes.getLength()/Count(word));
-		String round = String.format("%.2f", weight);
-		System.out.print(round+" \n");
-//		System.out.println(round);
-//		String value;
-//		value=Word.get(word)+ " "+ id + " "+ round;
+		
 		if(Word.get(word)==null) {
 			Word.put(word,"");
 		}
-		Word.put(word,Word.get(word)+ " "+ id + " "+ round);
+		
+		weight=freq*Math.log((double)nodes.getLength()/(double)Count(word));
+		String round = Word.get(word) + id + " "+ String.format("%.2f", weight)+" ";
+		
+		Word.put(word,round);
 	}
 
 
