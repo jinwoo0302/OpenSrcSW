@@ -33,12 +33,12 @@ public class searcher {
 				Tf[i]=kwrd.getCnt();
 		
 
-				System.out.printf("word[%d]:%s \t Tf[%d]:%d\n",i,word[i],i,Tf[i]);
+//				System.out.printf("word[%d]:%s \t Tf[%d]:%d\n",i,word[i],i,Tf[i]);
 				wordcnt++;
 		
 		}
 		
-		System.out.println("wordcnt:  "+wordcnt);
+//		System.out.println("wordcnt:  "+wordcnt);
 		
 		
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -49,7 +49,7 @@ public class searcher {
 		
 		NodeList titles = document.getElementsByTagName("title");
 		NodeList nodes = document.getElementsByTagName("body");
-		System.out.println("파싱할 리스트 수 : "+nodes.getLength());
+//		System.out.println("파싱할 리스트 수 : "+nodes.getLength());
 		
 	
 		
@@ -60,7 +60,7 @@ public class searcher {
 		for(int i=0;i<titles.getLength();i++){
 			Title[i]=titles.item(i).getTextContent();
 			Total[i]=0;
-			System.out.printf("Title[%d] : %s\n",i,Title[i]);
+//			System.out.printf("Title[%d] : %s\tTotal[%d] : %s\n",i,Title[i],i,Total[i]);
 		}
 		
 		
@@ -77,7 +77,7 @@ public class searcher {
 		Object object = objectInputStream.readObject();
 		objectInputStream.close();
 		
-		System.out.println("읽어올 객체의 type: "+object.getClass());
+//		System.out.println("읽어올 객체의 type: "+object.getClass());
 		
 		HashMap hashMap =(HashMap) object;
 		Iterator<String> it=hashMap.keySet().iterator();
@@ -87,79 +87,69 @@ public class searcher {
 		while(it.hasNext()) {
 			String key=it.next();
 			String value=(String)hashMap.get(key);
-			//key랑 value는 정상 작동
-//			System.out.println(cnt+key+value);
+
 						
 			for(int i=0; i<wordcnt;i++) {
 				
-//				System.out.println(cnt+key+value);
-				if(key == word[i]) {
-					//이게 왜 안되죠..					
-					System.out.println(cnt);
-				}else {
-					System.out.println("응 if문 못들어가~");
-				}
-				
-				
-				
-//				System.out.println(cnt+"   "+key+"    "+word[i]);
-//				System.out.println(key+word[i]);
-				
-//				if(key == word[i])
-////					System.out.println(key+word[i]+value);
-//				
-//				
-//				if(key==word[i]) {
-//					System.out.println("if문 들어왔다."+key+" "+word[i]);
-//					
-//					String[] temp=value.split(" ");
-//					
+//				String 비교할 땐 equals!(==는 주소값도 동일해야 함, string은 클래스임)
+				if(key.equals(word[i])) {
+								
+					String[] temp=value.split(" ");
+					
 //					System.out.println(cnt+"  "+word[i]+"  "+value);
-//					
-//					for(int j=0;j<temp.length;j=j+2) {
-//						int id=Integer.parseInt(temp[j]);
-//						
-////						System.out.println("temp:"+temp[j+1]);
-//						
-//						Total[id]+=Integer.parseInt(temp[j+1])*Tf[i];
-//						
-//					}
-//				}
+					
+					for(int j=0;j<temp.length;j=j+2) {
+						int id=Integer.parseInt(temp[j]);
+						Total[id]+=Double.parseDouble(temp[j+1])*Tf[i];
+						
+					}
+				}
 			}
 			
 			cnt++;
 		}
-	
 		
-		System.out.println("문서별 유사도");
-		for(int i=0; i<nodes.getLength();i++) {
-			System.out.printf("%s : %.2f\n", Title[i], Total[i]);
+		//정렬 전 확인용
+//		for(int i=0; i<Title.length; i++){
+//			System.out.printf("%s: %.2f\n",Title[i],Total[i]);
+//		}
+//		
+		
+		
+		
+		
+//		System.out.println("\n내림차순 정렬 후:");
+		int[] cmp=new int[Title.length];
+		for(int i=0; i<Title.length; i++){
+			cmp[i]=i;
 		}
-
 		
-//		각 문서와 내적해서(쿼리 1번째 단어 빈도수 x i번째 다큐먼트에서 그 단어의 가중치    들의 합)
-//		크기순 3개만 출력
+		
+		for(int i=0; i<Title.length-1; i++){
+            for(int j=i+1; j<Title.length; j++){
+                if(Total[cmp[i]]<Total[cmp[j]]){   
+                    int tmp=cmp[i];
+                    cmp[i]=cmp[j];
+                    cmp[j]=tmp;
+                }
+            }
+        }
+		
+//		for(int i=0; i<Title.length; i++){
+//			System.out.println(cmp[i]);
+//		}
 //		
-//		
-//		검색되는 문서의 유사도가 0일 경우
-//
-//		"검색된 문서가 없습니다" 와 같은 문구를 출력하시면 됩니다
-//
-//		2. 검색되는 문서(가중치값이 0보다 큰 문서)가 3개보다 적은 경우
-//
-//		- 검색되는 문서만 출력하시면 됩니다
-//
-//		3. 검색되는 문서가 모두 유사도가 같고, 3개보다 많은 경우
-//
-//		- id값이 작은 순서대로 3개만 출력하시면 됩니다
-//
-//		 4. 이번 실습 과제는 유사도에 따라 상위 3개 문서의 제목 (+유사도)를 출력하는 것입니다.
-//
-//		문서의 제목을 가져오기 위해서는 index.post 파일만으로 부족하기 때문에 
-//		그 이전 주차인 index.xml을 상대경로로 읽어서 추가하는 방법을 사용하셔도 됩니다. 
-//		그 밖에 문서의 제목을 가져오기 위한 다양한 방법을 사용하셔도 됩니다. 
-//		단, 상대경로로 파일을 여셔야 된다는 점은 주의하시기 바랍니다.
-//		
+		
+        for(int i=0;i<3;i++){
+        	if(Total[cmp[0]]==0) {
+        		System.out.println("검색된 문서가 없습니다.");
+        		break;
+        	}
+        	if(Total[cmp[i]]!=0) {
+        		System.out.printf("%s: %.2f\n",Title[cmp[i]],Total[cmp[i]]);
+        	}
+            
+        }
 	}
 
 
