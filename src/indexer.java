@@ -2,6 +2,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -46,9 +47,13 @@ public class indexer {
 		nodes = document.getElementsByTagName("body");
 		
 
+		
+		
+		//wordlist는 모든 단어들을 중복을 허용시켜 
+		//Count에서 써먹음(중복 허용 이유: 전체 문서에서 몇 번 나오는지 보려고)
 		cnt=0;
 		wordlist = new String[100000];
-		
+				
 		for(int i = 0;i<nodes.getLength();i++)
 		{
 			String str = nodes.item(i).getTextContent();
@@ -67,12 +72,21 @@ public class indexer {
             Weight(i, str);
 		}
 
-		
-		
-		for(int i=0;i<cnt;i++) {
-			System.out.println(wordlist[i]+" "+Word.get(wordlist[i]));
-		}
+		Iterator<String> it=Word.keySet().iterator();
 				
+		int cnt=0;
+		while(it.hasNext()) {
+			String key=it.next();
+			String value=(String)Word.get(key);
+			
+			System.out.println(cnt+"   "+key+"    "+value);
+			cnt++;
+		}
+		
+//		for(int i=0;i<cnt;i++) {
+//			System.out.println(i+" "+wordlist[i]+" "+Word.get(wordlist[i]));
+//		}
+//				
 		
 		objectOutputStream.writeObject(Word);
 		
