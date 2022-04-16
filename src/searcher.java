@@ -1,10 +1,7 @@
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-<<<<<<< HEAD
 import java.util.Arrays;
-=======
->>>>>>> origin/feature
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -23,11 +20,7 @@ public class searcher {
 	@SuppressWarnings({ "null", "unchecked", "rawtypes", "unused" })
 	public static void CalcSim(String path, String query) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
 		
-<<<<<<< HEAD
 		//입력받은 query를 형태소 분석
-=======
-		
->>>>>>> origin/feature
 		String qstr = query;
 		KeywordExtractor ke = new KeywordExtractor();
 		KeywordList kl = ke.extractKeyword(qstr, true);
@@ -56,21 +49,14 @@ public class searcher {
 		document=docBuilder.parse("./collection.xml");
 		
 		NodeList titles = document.getElementsByTagName("title");
-<<<<<<< HEAD
 		
 		//body태그로 나눠서 노드에 넣기
-=======
->>>>>>> origin/feature
 		NodeList nodes = document.getElementsByTagName("body");
 //		System.out.println("파싱할 리스트 수 : "+nodes.getLength());
 		
 	
 		
-<<<<<<< HEAD
 		//문서와의 유사도 초기화
-=======
-		
->>>>>>> origin/feature
 		String[] Title=new String[titles.getLength()];
 		double[] Total= new double[nodes.getLength()];
 		
@@ -100,7 +86,6 @@ public class searcher {
 		Iterator<String> it=hashMap.keySet().iterator();
 		
 		
-<<<<<<< HEAD
 		
 		//코사인 유사도로 변경하기 위해 query와 문서의 크기 계산
 		double qsize=0;
@@ -117,8 +102,6 @@ public class searcher {
 		
 		
 		
-=======
->>>>>>> origin/feature
 		int cnt=0;
 		while(it.hasNext()) {
 			String key=it.next();
@@ -137,11 +120,7 @@ public class searcher {
 					for(int j=0;j<temp.length;j=j+2) {
 						int id=Integer.parseInt(temp[j]);
 						Total[id]+=Double.parseDouble(temp[j+1])*Tf[i];
-<<<<<<< HEAD
 						idsize[id]+=Math.pow(Double.parseDouble(temp[j+1]), 2);
-=======
-						
->>>>>>> origin/feature
 					}
 				}
 			}
@@ -149,7 +128,6 @@ public class searcher {
 			cnt++;
 		}
 		
-<<<<<<< HEAD
 		
 		
 		for(int i=0;i<idsize.length;i++) {
@@ -163,13 +141,6 @@ public class searcher {
 //			System.out.printf("%s: %.2f\n",Title[i],Total[i]);
 		}
 		
-=======
-		//정렬 전 확인용
-//		for(int i=0; i<Title.length; i++){
-//			System.out.printf("%s: %.2f\n",Title[i],Total[i]);
-//		}
-//		
->>>>>>> origin/feature
 		
 		
 		
