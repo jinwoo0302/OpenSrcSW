@@ -2,11 +2,17 @@
 *.project
 bin/
 
+<<<<<<< HEAD
 /.project
+=======
+>>>>>>> feature
 /indexer.class
 /kuir.class
 /makeCollection.class
 /makeKeyword.class
 /makeXml.class
 /searcher.class
+<<<<<<< HEAD
 /bin/
+=======
+>>>>>>> feature
