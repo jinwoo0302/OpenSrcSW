@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 
 public class searcher {
 	@SuppressWarnings({ "null", "unchecked", "rawtypes", "unused" })
-	public static void CalcSim(String path, String query) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
+	public static double[] InnerProduct(String path, String query) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
 		
 		
 		String qstr = query;
@@ -109,47 +109,9 @@ public class searcher {
 			cnt++;
 		}
 		
-		//정렬 전 확인용
-//		for(int i=0; i<Title.length; i++){
-//			System.out.printf("%s: %.2f\n",Title[i],Total[i]);
-//		}
-//		
-		
-		
-		
-		
-//		System.out.println("\n내림차순 정렬 후:");
-		int[] cmp=new int[Title.length];
-		for(int i=0; i<Title.length; i++){
-			cmp[i]=i;
-		}
-		
-		
-		for(int i=0; i<Title.length-1; i++){
-            for(int j=i+1; j<Title.length; j++){
-                if(Total[cmp[i]]<Total[cmp[j]]){   
-                    int tmp=cmp[i];
-                    cmp[i]=cmp[j];
-                    cmp[j]=tmp;
-                }
-            }
-        }
-		
-//		for(int i=0; i<Title.length; i++){
-//			System.out.println(cmp[i]);
-//		}
-//		
-		
-        for(int i=0;i<3;i++){
-        	if(Total[cmp[0]]==0) {
-        		System.out.println("검색된 문서가 없습니다.");
-        		break;
-        	}
-        	if(Total[cmp[i]]!=0) {
-        		System.out.printf("%s: %.2f\n",Title[cmp[i]],Total[cmp[i]]);
-        	}
-            
-        }
+
+
+		return Total;
 	}
 
 

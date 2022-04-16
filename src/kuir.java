@@ -25,7 +25,7 @@ public class kuir {
 		}else if(command.equals("-s")) {
 			//post를 path로 참조
 			searcher search = new searcher();
-			search.CalcSim(path, args[3]);
+			search.InnerProduct(path, args[3]);
 		}else
 			System.out.println("Invalid arguments");
 	}
