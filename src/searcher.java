@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 
 public class searcher {
 	@SuppressWarnings({ "null", "unchecked", "rawtypes", "unused" })
-	public static void InnerProduct(String path, String query) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
+	public static void CalcSim(String path, String query) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
 		
 		//입력받은 query를 형태소 분석
 		String qstr = query;
