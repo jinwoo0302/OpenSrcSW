@@ -137,8 +137,10 @@ public class searcher {
 		
 		
 		for(int i=0; i<Title.length; i++){
-			Total[i]=Total[i]/(qsize*idsize[i]);
+			if(idsize[i]>0) {
+				Total[i]=Total[i]/(qsize*idsize[i]);
 //			System.out.printf("%s: %.2f\n",Title[i],Total[i]);
+			}
 		}
 		
 		
